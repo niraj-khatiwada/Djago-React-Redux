@@ -1,10 +1,10 @@
 from .serializers import LeadSerializer
 from ..models import Lead
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, permissions
 
 
 class LeadAPIListView(mixins.CreateModelMixin, generics.ListAPIView):
-    permission_classes = []
+    permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
     serializer_class = LeadSerializer

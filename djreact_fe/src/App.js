@@ -1,22 +1,28 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import { axiosFetchStartAsync } from './redux/reducers/leads/leads.action'
+import Appbar from './components/utils/Appbar/Appbar.component'
+import Leads from './components/Leads.component'
 
-import { CustomButton, CustomAppBar } from './App.styles'
-
-function App() {
-  return (
-    <>
-      <CustomAppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">Leads</Typography>
-          <CustomButton color="inherit">Login</CustomButton>
-        </Toolbar>
-      </CustomAppBar>
-    </>
-  )
+class App extends React.Component {
+  componentDidMount() {
+    this.props.axiosGET()
+  }
+  render() {
+    return (
+      <>
+        <Appbar />
+        <Switch>
+          <Route exact path="/" render={() => <Leads />} />
+        </Switch>
+      </>
+    )
+  }
 }
 
-export default App
+const mapDipatchToProps = (dispatch) => ({
+  axiosGET: () => dispatch(axiosFetchStartAsync()),
+})
+export default connect(null, mapDipatchToProps)(App)
