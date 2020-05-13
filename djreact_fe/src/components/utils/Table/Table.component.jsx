@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { v4 as uuid } from 'uuid'
+
 import MaterialTable from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -8,29 +11,39 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { Wrapper } from './Table.styles'
 
-export default function Table() {
+import { selectListArray } from '../../../redux/reducers/leads/leads.selectors'
+
+function Table({ listArray }) {
   return (
     <Wrapper>
       <TableContainer component={Paper}>
         <MaterialTable aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              {listArray.map((item) => {
+                return Object.keys(item).map((i) => (
+                  <TableCell key={uuid()}>{i}</TableCell>
+                ))
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {rows.map((row) => ( */}
-            <TableRow>
-              <TableCell component="th" scope="row"></TableCell>
-            </TableRow>
-            {/* ))} */}
+            {listArray.map((item) => (
+              <TableRow key={uuid()}>
+                {Object.keys(item).map((i) => (
+                  <TableCell key={uuid()}>{item[i]}</TableCell>
+                ))}
+              </TableRow>
+            ))}
           </TableBody>
         </MaterialTable>
       </TableContainer>
     </Wrapper>
   )
 }
+
+const mapStateToProps = (state) => ({
+  listArray: selectListArray(state),
+})
+
+export default connect(mapStateToProps, null)(Table)

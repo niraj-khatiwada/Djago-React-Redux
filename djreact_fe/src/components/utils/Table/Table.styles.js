@@ -6,5 +6,6 @@ export const Wrapper = styled.div`
     grid-template-columns: 0.8fr;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
   }
 `
