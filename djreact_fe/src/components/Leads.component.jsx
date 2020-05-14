@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Table from './utils/Table/Table.component'
 import withSpinner from './utils/hoc_loader/loader.component'
 import { connect } from 'react-redux'
-import { Button } from '@material-ui/core'
 
 const HOCTable = withSpinner(Table)
 
