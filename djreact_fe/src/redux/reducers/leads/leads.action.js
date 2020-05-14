@@ -71,7 +71,6 @@ export const axiosFetchDeleteAsync = (pk) => async (dispatch) => {
   })
     .then((res) => {
       dispatch(axiosFetchSuccess(httpType.DELETE, res.data))
-      dispatch(axiosFetchListAsync(httpType.LIST))
     })
     .catch((error) =>
       dispatch(axiosFetchError(httpType.DELETE, error.response))

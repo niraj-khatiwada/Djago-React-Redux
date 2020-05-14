@@ -17,7 +17,7 @@ class Leads extends Component {
 }
 
 const mapStateToProp = (state) => ({
-  isLoading: state.leadList.isListFetching,
+  isLoading: state.lead.leadList.isListFetching,
 })
 
 export default connect(mapStateToProp)(Leads)

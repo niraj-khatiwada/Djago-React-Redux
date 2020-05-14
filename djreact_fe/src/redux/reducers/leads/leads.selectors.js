@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 
-const selectLeads = (state) => state.leadList
+const selectLead = (state) => state.lead
 
-// const selectLeadList = createSelector([selectLeads], (leads) => leads.leadList)
-export const selectListArray = createSelector([selectLeads], (leadList) =>
+const selectLeadList = createSelector([selectLead], (lead) => lead.leadList)
+
+export const selectListArray = createSelector([selectLeadList], (leadList) =>
   leadList.listData ? leadList.listData : []
 )

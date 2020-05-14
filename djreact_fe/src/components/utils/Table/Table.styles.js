@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import TableCell from '@material-ui/core/TableCell'
 
 export const Wrapper = styled.div`
   && {
@@ -8,4 +9,8 @@ export const Wrapper = styled.div`
     align-items: center;
     margin-top: 2rem;
   }
+`
+
+export const CustomTableCell = styled(TableCell)`
+  width: 6rem;
 `
