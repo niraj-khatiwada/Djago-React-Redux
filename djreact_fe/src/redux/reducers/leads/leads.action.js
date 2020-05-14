@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { httpType, axiosFetch } from '../utils/reducers.utils'
+
 const axiosDefaults = {
   baseURL:
     process.env.NODE_ENV === 'development'
@@ -7,31 +9,71 @@ const axiosDefaults = {
       : process.env.REACT_APP_PRODUCTION_URL,
 }
 
-export const axiosFetchStart = () => {
-  return {
-    type: 'AXIOS_FETCH_START',
+const axiosFetchStart = (http) => {
+  switch (http) {
+    case httpType.LIST:
+      return {
+        type: axiosFetch.LIST.START,
+      }
+    case httpType.DELETE:
+      return {
+        type: axiosFetch.DELETE.START,
+      }
   }
 }
 
-export const axiosFetchSuccess = (data) => {
-  return {
-    type: 'AXIOS_FETCH_SUCCESSFUL',
-    payload: data,
+const axiosFetchSuccess = (http, data) => {
+  switch (http) {
+    case httpType.LIST:
+      return {
+        type: axiosFetch.LIST.SUCCESS,
+        payload: data,
+      }
+    case httpType.DELETE:
+      return {
+        type: axiosFetch.DELETE.SUCCESS,
+        payload: data,
+      }
   }
 }
 
-export const axiosFetchError = (error) => {
-  return {
-    type: 'AXIOS_FETCH_ERROR',
-    payload: error,
+const axiosFetchError = (httpType, error) => {
+  switch (httpType) {
+    case 'LIST':
+      return {
+        type: axiosFetch.LIST.ERROR,
+        payload: error,
+      }
+    case 'DELETE':
+      return {
+        type: axiosFetch.DELETE.ERROR,
+        payload: error,
+      }
   }
 }
 
-export const axiosFetchStartAsync = () => async (dispatch) => {
-  dispatch(axiosFetchStart())
+// LIST
+export const axiosFetchListAsync = () => async (dispatch) => {
+  dispatch(axiosFetchStart(httpType.LIST))
   await axios({
     url: axiosDefaults.baseURL + 'api/',
   })
-    .then((res) => dispatch(axiosFetchSuccess(res.data)))
-    .catch((error) => dispatch(axiosFetchError(error.response)))
+    .then((res) => dispatch(axiosFetchSuccess(httpType.LIST, res.data)))
+    .catch((error) => dispatch(axiosFetchError(httpType.LIST, error.response)))
+}
+
+// DELETE
+export const axiosFetchDeleteAsync = (pk) => async (dispatch) => {
+  dispatch(axiosFetchStart(httpType.DELETE))
+  axios({
+    method: 'delete',
+    url: axiosDefaults.baseURL + `api/${pk}/`,
+  })
+    .then((res) => {
+      dispatch(axiosFetchSuccess(httpType.DELETE, res.data))
+      dispatch(axiosFetchListAsync(httpType.LIST))
+    })
+    .catch((error) =>
+      dispatch(axiosFetchError(httpType.DELETE, error.response))
+    )
 }

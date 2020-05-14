@@ -20,7 +20,10 @@ export const Loader = styled.div`
   width: 2rem;
   height: 2rem;
   border-radius: 100%;
-  border-top: 5px solid red;
+  border-top: 3px solid #162447;
+  border-right: 5px solid transparent;
+  border-bottom: 3px solid #162447;
+  border-left: 5px solid transparent;
   animation: ${rotate} 1s infinite
   }
 `
