@@ -25,11 +25,21 @@ function Table({ listArray, axiosDelete }) {
         <MaterialTable aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell>S.N</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Message</TableCell>
-              <TableCell>Options</TableCell>
+              <TableCell>
+                <strong>S.N</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Email</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Message</strong>
+              </TableCell>
+              <CustomTableCell>
+                <strong>Options</strong>
+              </CustomTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

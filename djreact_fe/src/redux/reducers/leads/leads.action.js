@@ -19,6 +19,10 @@ const axiosFetchStart = (http) => {
       return {
         type: axiosFetch.DELETE.START,
       }
+    case httpType.CREATE:
+      return {
+        type: axiosFetch.CREATE.START,
+      }
   }
 }
 
@@ -34,19 +38,29 @@ const axiosFetchSuccess = (http, data) => {
         type: axiosFetch.DELETE.SUCCESS,
         payload: data,
       }
+    case httpType.CREATE:
+      return {
+        type: axiosFetch.CREATE.SUCCESS,
+        payload: data,
+      }
   }
 }
 
-const axiosFetchError = (httpType, error) => {
-  switch (httpType) {
-    case 'LIST':
+const axiosFetchError = (http, error) => {
+  switch (http) {
+    case httpType.LIST:
       return {
         type: axiosFetch.LIST.ERROR,
         payload: error,
       }
-    case 'DELETE':
+    case httpType.DELETE:
       return {
         type: axiosFetch.DELETE.ERROR,
+        payload: error,
+      }
+    case httpType.CREATE:
+      return {
+        type: axiosFetch.CREATE.ERROR,
         payload: error,
       }
   }
@@ -60,6 +74,20 @@ export const axiosFetchListAsync = () => async (dispatch) => {
   })
     .then((res) => dispatch(axiosFetchSuccess(httpType.LIST, res.data)))
     .catch((error) => dispatch(axiosFetchError(httpType.LIST, error.response)))
+}
+
+// Create
+export const axiosFetchCreateAsync = (data) => async (dispatch) => {
+  dispatch(axiosFetchStart(httpType.CREATE))
+  axios({
+    method: 'POST',
+    url: axiosDefaults.baseURL + 'api/',
+    data: { ...data },
+  })
+    .then((res) => dispatch(axiosFetchSuccess(httpType.CREATE, res.data)))
+    .catch((error) =>
+      dispatch(axiosFetchError(httpType.CREATE, error.response))
+    )
 }
 
 // DELETE

@@ -7,6 +7,11 @@ const INITIAL_STATE = {
     deleteData: null,
     deleteError: undefined,
   },
+  leadCreate: {
+    isCreateFetching: false,
+    createData: null,
+    createError: undefined,
+  },
 }
 
 export const leadReducer = (state = INITIAL_STATE, action) => {
@@ -58,6 +63,32 @@ export const leadReducer = (state = INITIAL_STATE, action) => {
           ...state.leadDelete,
           isDeleteFetching: false,
           deleteError: action.payload,
+        },
+      }
+    case axiosFetch.CREATE.START:
+      return {
+        ...state,
+        leadCreate: {
+          ...state.leadCreate,
+          isCreateFetching: true,
+        },
+      }
+    case axiosFetch.CREATE.SUCCESS:
+      return {
+        ...state,
+        leadCreate: {
+          ...state.leadCreate,
+          isCreateFetching: false,
+          createData: action.payload,
+        },
+      }
+    case axiosFetch.CREATE.ERROR:
+      return {
+        ...state,
+        leadCreate: {
+          ...state.leadCreate,
+          isCreateFetching: false,
+          createError: action.payload,
         },
       }
     default:
