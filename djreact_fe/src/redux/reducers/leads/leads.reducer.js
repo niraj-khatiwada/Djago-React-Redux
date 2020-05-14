@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     createData: null,
     createError: undefined,
   },
+  token: document.cookie,
 }
 
 export const leadReducer = (state = INITIAL_STATE, action) => {

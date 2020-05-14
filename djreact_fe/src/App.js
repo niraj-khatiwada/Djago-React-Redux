@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { axiosFetchListAsync } from './redux/reducers/leads/leads.action'
 import Appbar from './components/utils/Appbar/Appbar.component'
-import Leads from './components/Leads.component'
-import Post from './components/Authentication/Post.component'
+
+const Leads = lazy(() => import('./components/Leads.component'))
+const Post = lazy(() => import('./components/Authentication/Post.component'))
 
 class App extends React.Component {
   componentDidMount() {
@@ -16,12 +17,14 @@ class App extends React.Component {
       <React.Fragment>
         <Appbar />
         <Switch>
-          <Route exact path="/" render={() => <Leads />} />
-          <Route
-            exact
-            path="/post"
-            render={(routeProps) => <Post routeProps={routeProps} />}
-          />
+          <Suspense fallback={<h1></h1>}>
+            <Route exact path="/" render={() => <Leads />} />
+            <Route
+              exact
+              path="/post"
+              render={(routeProps) => <Post routeProps={routeProps} />}
+            />
+          </Suspense>
         </Switch>
       </React.Fragment>
     )
