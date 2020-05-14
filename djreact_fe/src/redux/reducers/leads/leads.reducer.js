@@ -83,15 +83,7 @@ export const leadReducer = (state = INITIAL_STATE, action) => {
         },
         leadList: {
           ...state.leadList,
-          listData: [
-            ...state.leadList.listData,
-            {
-              id: 100,
-              name: 'Hari bhadur 100',
-              email: 'hari@gmail.com',
-              message: 'aksjnajksasbj',
-            },
-          ],
+          listData: [...state.leadList.listData, action.payload],
         },
       }
     case axiosFetch.CREATE.ERROR:
