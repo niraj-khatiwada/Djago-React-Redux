@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { CustomForm } from './Login.styles'
+import { CustomForm } from './Post.styles'
 
 import {
   FormControl,
@@ -13,7 +13,7 @@ import {
 
 import { axiosFetchCreateAsync } from '../../redux/reducers/leads/leads.action'
 
-class Login extends Component {
+class Post extends Component {
   state = {
     name: '',
     email: '',
@@ -23,6 +23,7 @@ class Login extends Component {
     evt.preventDefault()
     this.props.submitForm({ ...this.state })
     this.setState({ name: '', email: '', message: '' })
+    this.props.routeProps.history.push('/')
   }
   handleInputChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value })
@@ -79,4 +80,4 @@ const mapDispatchToProps = (dispatch) => ({
   submitForm: (data) => dispatch(axiosFetchCreateAsync(data)),
 })
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(null, mapDispatchToProps)(Post)

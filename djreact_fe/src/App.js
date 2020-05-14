@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { axiosFetchListAsync } from './redux/reducers/leads/leads.action'
 import Appbar from './components/utils/Appbar/Appbar.component'
 import Leads from './components/Leads.component'
-import Login from './components/Authentication/Login.component'
+import Post from './components/Authentication/Post.component'
 
 class App extends React.Component {
   componentDidMount() {
@@ -17,7 +17,11 @@ class App extends React.Component {
         <Appbar />
         <Switch>
           <Route exact path="/" render={() => <Leads />} />
-          <Route exact path="/login" render={() => <Login />} />
+          <Route
+            exact
+            path="/post"
+            render={(routeProps) => <Post routeProps={routeProps} />}
+          />
         </Switch>
       </React.Fragment>
     )

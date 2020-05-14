@@ -84,7 +84,9 @@ export const axiosFetchCreateAsync = (data) => async (dispatch) => {
     url: axiosDefaults.baseURL + 'api/',
     data: { ...data },
   })
-    .then((res) => dispatch(axiosFetchSuccess(httpType.CREATE, res.data)))
+    .then((res) => {
+      dispatch(axiosFetchSuccess(httpType.CREATE, res.data))
+    })
     .catch((error) =>
       dispatch(axiosFetchError(httpType.CREATE, error.response))
     )

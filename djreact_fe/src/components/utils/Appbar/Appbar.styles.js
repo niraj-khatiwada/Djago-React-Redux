@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar'
 export const CustomButton = styled(Button)`
   && {
     margin-left: auto;
-    background-color: #004c4c;
+    color: white;
   }
 `
 
